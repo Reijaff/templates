@@ -1,0 +1,29 @@
+# config/*
+
+# !config/bforartists/4.2/config/userpref.blend
+# config/bforartists/4.2/config/*
+# !config/Code/User/settings.json
+
+
+untitled.blend1
+
+config/*
+
+!config/bforartists/
+# Ignore everything in the bforartists directory
+config/bforartists/*
+# Re-include the 4.2 directory
+!config/bforartists/4.2/
+# Ignore everything in the 4.2 directory
+config/bforartists/4.2/*
+# Re-include the config directory within 4.2
+!config/bforartists/4.2/config/
+# Ignore everything in the config directory within 4.2
+config/bforartists/4.2/config/*
+# Re-include the startup.blend file
+!config/bforartists/4.2/config/startup.blend
+!config/bforartists/4.2/config/userpref.blend
+
+!config/Code/
+config/Code/User/*
+!config/Code/User/settings.json

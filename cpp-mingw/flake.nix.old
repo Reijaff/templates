@@ -1,0 +1,41 @@
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
+
+  outputs = {
+    self,
+    nixpkgs,
+    flake-utils,
+  }:
+    flake-utils.lib.eachDefaultSystem (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
+      devShells.default = pkgs.mkShell {
+        buildInputs = with pkgs; [
+          cmake
+          gnumake
+          ninja
+
+          pkgsCross.mingwW64.stdenv.cc
+          pkgsCross.mingwW64.windows.pthreads
+
+          #  pkgs.hello
+        ];
+
+        shellHook = ''
+          cat >.clangd <<EOF
+          CompileFlags:
+            Compiler: ${pkgs.pkgsCross.mingwW64.stdenv.cc.outPath}/bin/x86_64-w64-mingw32-c++
+            Add: [-I${pkgs.pkgsCross.mingwW64.buildPackages.gcc.cc}/x86_64-w64-mingw32/sys-include, --target=x86_64-w64-mingw32]
+          EOF
+
+
+          export CXX=x86_64-w64-mingw32-c++
+          export CC=x86_64-w64-mingw32-cc
+          $EDITOR ./
+        '';
+      };
+    });
+}
