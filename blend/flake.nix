@@ -59,6 +59,7 @@
 
             (python3.withPackages (p:
               with p; [
+                waitress
                 flask
                 numpy
                 scipy
@@ -163,7 +164,7 @@
                   version = "0.0.1";
                   src = fetchGit {
                     url = "https://github.com/myshell-ai/MeloTTS.git";
-                    rev = "fcfed7670d310eb5923acea66a670697030a254f";
+                    rev = "5b538481e24e0d578955be32a95d88fcbde26dc8";
                   };
                   doCheck = false;
                 })
