@@ -13,6 +13,19 @@
       numpy
       opencv4
       tqdm
+
+
+      (buildPythonPackage rec {
+        pname = "scenedetect";
+        version = "";
+        src = fetchGit {
+          url = "https://github.com/Breakthrough/PySceneDetect";
+          rev = "53d2441d060117d440857f260710fc6d7ad67c2a";
+        };
+        doCheck = false;
+      })
+
+
     ]);
 
   runtimeInstallScript = src: name: ''
@@ -35,6 +48,18 @@
       };
       ri = runtimeInstallScript src repo;
     }
+
+    rec {
+      repo = "Shot_Detection";
+      owner = "Reijaff";
+      src = builtins.fetchGit {
+        url = "https://github.com/${owner}/${repo}";
+        rev = "c5e3ead25e6f7e275135cb1aa2731b76f80ebb15";
+      };
+      ri = runtimeInstallScript src repo;
+    }
+
+
 
     # rec {
     #   repo = "marking_of_highlights";
