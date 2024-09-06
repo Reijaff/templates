@@ -26,16 +26,20 @@
 
         ${builtins.foldl' (a: b: a + b.ri) "" dist.plugins}
 
-        echo Starting tts server ...
-        python dist/btts.py &
 
-        bash
 
-        trap '
-          echo "Exiting the shell ... "
-          rm -r config/Code/Workspaces/*
-          pkill -f btts.py
-        ' EXIT
+        tmux new-session -d -s my_session
+        tmux split-window -h
+        tmux send-keys 'python dist/btts.py' C-m
+        tmux split-window -v
+        tmux send-keys 'python dist/rbg2.py' C-m
+        tmux select-pane -t 0
+        tmux send-keys 'bash' C-m
+        # Send the alias definition to the Bash pane
+        tmux send-keys -t 0 'alias exit="tmux kill-session -t my_session"' C-m
+        tmux attach-session -t my_session
+
+
       '';
 
       fhs = pkgs.buildFHSEnv rec {
@@ -52,6 +56,7 @@
           with pkgs; [
             ffmpeg
             # blender
+            tmux
 
             libdecor # for bforartists
 
@@ -59,6 +64,28 @@
 
             (python3.withPackages (p:
               with p; [
+                # gradio
+                # watchdog
+                # filetype
+
+                # rembg
+
+                uvicorn
+                jsonschema
+                pymatting
+                opencv4
+                onnxruntime
+                (buildPythonPackage rec {
+                  pname = "rembg";
+                  version = "";
+                  src = fetchGit {
+                    url = "https://github.com/danielgatis/rembg";
+                    rev = "95b81143c9a1d760c892ffa7f406f055fc244b81";
+                  };
+                  doCheck = false;
+                })
+                #
+
                 waitress
                 flask
                 numpy
@@ -97,17 +124,6 @@
                 librosa
                 pandas
                 matplotlib
-
-                # resemble-enhance
-                (buildPythonPackage rec {
-                  pname = "resemble-enhance";
-                  version = "0.0.1";
-                  src = fetchGit {
-                    url = "https://github.com/resemble-ai/resemble-enhance";
-                    rev = "b4bd8d693a8353617bba7d0cd0fb2e8c4e586527";
-                  };
-                  doCheck = false;
-                })
 
                 dtw-python
                 openai-whisper

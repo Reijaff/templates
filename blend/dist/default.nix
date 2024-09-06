@@ -12,8 +12,8 @@
 
       numpy
       opencv4
+      pillow
       tqdm
-
 
       (buildPythonPackage rec {
         pname = "scenedetect";
@@ -25,7 +25,21 @@
         doCheck = false;
       })
 
-
+      # rembg ( crashes )
+      # pooch
+      # jsonschema
+      # pymatting
+      # # opencv4
+      # onnxruntime
+      # (buildPythonPackage rec {
+      #   pname = "rembg";
+      #   version = "";
+      #   src = fetchGit {
+      #     url = "https://github.com/danielgatis/rembg";
+      #     rev = "95b81143c9a1d760c892ffa7f406f055fc244b81";
+      #   };
+      #   doCheck = false;
+      # })
     ]);
 
   runtimeInstallScript = src: name: ''
@@ -40,11 +54,51 @@
 
   plugins = [
     rec {
+      repo = "freesound";
+      owner = "iwkse";
+      src = builtins.fetchGit {
+        url = "https://github.com/${owner}/${repo}";
+        rev = "7ac73f675187934f03b964b0b3e63e0a6951abc1";
+      };
+      ri = runtimeInstallScript src repo;
+    }
+
+    rec {
+      repo = "abratools";
+      owner = "abrasic";
+      src = builtins.fetchGit {
+        url = "https://github.com/${owner}/${repo}";
+        rev = "df705c0c6ba5a9a327b1dcf5bf884ba545b6463d";
+      };
+      ri = runtimeInstallScript src repo;
+    }
+
+    rec {
       repo = "import_latex_as_curve";
       owner = "Reijaff";
       src = builtins.fetchGit {
         url = "https://github.com/${owner}/${repo}";
         rev = "c699829e6da3983acb7366bd200a9550fbeef60a";
+      };
+      ri = runtimeInstallScript src repo;
+    }
+
+    rec {
+      repo = "anim_utils";
+      owner = "Reijaff";
+      src = builtins.fetchGit {
+        url = "https://github.com/${owner}/${repo}";
+        rev = "7277c669ab3ad1846827397c27b2e6d38e2f575b";
+      };
+      ri = runtimeInstallScript src repo;
+    }
+
+    rec {
+      repo = "remove_background";
+      owner = "Reijaff";
+      src = builtins.fetchGit {
+        url = "https://github.com/${owner}/${repo}";
+        rev = "f360a55da3b05cd724c1a31cd3eb531d9e3f5ddb";
       };
       ri = runtimeInstallScript src repo;
     }
@@ -58,8 +112,6 @@
       };
       ri = runtimeInstallScript src repo;
     }
-
-
 
     # rec {
     #   repo = "marking_of_highlights";
