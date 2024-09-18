@@ -1,0 +1,3 @@
+[submodule "fsharp-nix"]
+	path = fsharp-nix
+	url = https://github.com/mtrsk/fsharp-nix

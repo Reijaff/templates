@@ -3,6 +3,9 @@
 
   outputs = {self}: {
     templates = {
+      fsharp = {
+        path = ./fsharp-nix;
+      };
       go = {
         path = ./go;
       };
