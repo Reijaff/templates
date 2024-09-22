@@ -31,6 +31,6 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             self.end_headers()
 
 
-httpd = HTTPServer(("localhost", 7000), SimpleHTTPRequestHandler)
-print("Server running on http://localhost:7000")
+httpd = HTTPServer(("localhost", 5301), SimpleHTTPRequestHandler)
 httpd.serve_forever()
+

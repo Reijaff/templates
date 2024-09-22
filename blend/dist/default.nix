@@ -25,21 +25,37 @@
         doCheck = false;
       })
 
-      # rembg ( crashes )
-      # pooch
-      # jsonschema
-      # pymatting
-      # # opencv4
-      # onnxruntime
-      # (buildPythonPackage rec {
-      #   pname = "rembg";
-      #   version = "";
-      #   src = fetchGit {
-      #     url = "https://github.com/danielgatis/rembg";
-      #     rev = "95b81143c9a1d760c892ffa7f406f055fc244b81";
-      #   };
-      #   doCheck = false;
-      # })
+      av
+      (buildPythonPackage rec {
+        pname = "auto-editor";
+        version = "";
+        src = builtins.fetchurl {
+          url = "https://files.pythonhosted.org/packages/28/ef/8ec9b7187cbba70e5bb638883a93db6e6f1203cb3d6516f63aabfc6d6263/auto_editor-25.2.0-py3-none-any.whl";
+          sha256 = "sha256-67rqLe8ebM1QGaPGBulR4t/K5qEkiUGh9qH4WyyvNZk=";
+        };
+        format = "wheel";
+        doCheck = false;
+        buildInputs = [];
+        checkInputs = [];
+        nativeBuildInputs = [];
+        propagatedBuildInputs = [];
+      })
+
+      # swearing
+      joblib
+      scikit-learn
+      nltk
+      (buildPythonPackage rec {
+        pname = "check-swear";
+        version = "";
+        src = fetchGit {
+          url = "https://github.com/bbd03/check-swear";
+          rev = "fbd3ead951e0d3625c9e528e81d391ed89b454d0";
+        };
+        doCheck = false;
+      })
+
+      pysubs2
     ]);
 
   runtimeInstallScript = src: name: ''
@@ -104,11 +120,11 @@
     }
 
     rec {
-      repo = "Shot_Detection";
+      repo = "vse_utils";
       owner = "Reijaff";
       src = builtins.fetchGit {
         url = "https://github.com/${owner}/${repo}";
-        rev = "c5e3ead25e6f7e275135cb1aa2731b76f80ebb15";
+        rev = "6be425580609f29bcfce800e1f4eeb73dfd3167b";
       };
       ri = runtimeInstallScript src repo;
     }
@@ -148,7 +164,7 @@
       owner = "Reijaff";
       src = builtins.fetchGit {
         url = "https://github.com/${owner}/${repo}";
-        rev = "46f6c54540dc54a18e04e91925113ce58a363f3d";
+        rev = "c8eefaa294746f2a40eca726ab907c346ebeada8";
       };
       ri = runtimeInstallScript src repo;
     }

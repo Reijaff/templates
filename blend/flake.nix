@@ -30,9 +30,11 @@
 
         tmux new-session -d -s my_session
         tmux split-window -h
-        tmux send-keys 'python dist/btts.py' C-m
+        tmux send-keys 'python dist/tts-server.py' C-m
         tmux split-window -v
-        tmux send-keys 'python dist/rbg2.py' C-m
+        tmux send-keys 'python dist/rembg-server.py' C-m
+        tmux split-window -v
+        tmux send-keys 'python dist/whisper-server.py' C-m
         tmux select-pane -t 0
         tmux send-keys 'bash' C-m
         # Send the alias definition to the Bash pane
@@ -131,8 +133,8 @@
                   pname = "whisper-timestamped";
                   version = "";
                   src = fetchGit {
-                    url = "https://github.com/linto-ai/whisper-timestamped";
-                    rev = "a82e4d884a504625e8d6a98265272e2cb14c0901";
+                    url = "https://github.com/Reijaff/whisper-timestamped";
+                    rev = "2061b606dbe9575010979b9f5126529253900ac0";
                   };
                   doCheck = false;
                 })
@@ -227,6 +229,34 @@
                   nativeBuildInputs = [];
                   propagatedBuildInputs = [];
                 })
+
+                # whisperspeech
+                gradio-client
+                # encodec
+
+                (buildPythonPackage rec {
+                  pname = "edge-tts";
+                  version = "";
+                  src = fetchGit {
+                    url = "https://github.com/rany2/edge-tts";
+                    rev = "dfd4cab849a988d9587684cf3f9f9536c92b8f4d";
+                  };
+                  doCheck = false;
+                })
+
+                # swearing
+                joblib
+                scikit-learn
+                nltk
+                (buildPythonPackage rec {
+                  pname = "check-swear";
+                  version = "";
+                  src = fetchGit {
+                    url = "https://github.com/bbd03/check-swear";
+                    rev = "fbd3ead951e0d3625c9e528e81d391ed89b454d0";
+                  };
+                  doCheck = false;
+                })
               ]))
             dist.bforartists_python
 
@@ -258,8 +288,6 @@
                 hyperref
                 capt-of
                 ; # probably needed
-              #(setq org-latex-compiler "lualatex")
-              #(setq org-preview-latex-default-process 'dvisvgm)
             })
           ];
         runScript = initScript;
