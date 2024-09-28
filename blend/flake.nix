@@ -32,6 +32,8 @@
         tmux split-window -h
         tmux send-keys 'python dist/tts-server.py' C-m
         tmux split-window -v
+        tmux send-keys 'python dist/segment-server.py' C-m
+        tmux split-window -v
         tmux send-keys 'python dist/rembg-server.py' C-m
         tmux split-window -v
         tmux send-keys 'python dist/whisper-server.py' C-m
@@ -257,6 +259,10 @@
                   };
                   doCheck = false;
                 })
+
+                webrtcvad
+                umap-learn
+
               ]))
             dist.bforartists_python
 
